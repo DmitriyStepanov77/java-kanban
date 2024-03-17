@@ -1,11 +1,11 @@
 import java.util.Objects;
 
 public class Task {
-    private static int countTaskAllTime;
+    private static int countTaskAllTime = 0;
     private String Name;
     private int id;
     private String Description;
-    private TaskStatus status;
+    protected TaskStatus status;
 
     public Task(String name, String description, TaskStatus status) {
         Name = name;
@@ -13,6 +13,29 @@ public class Task {
         this.status = status;
         countTaskAllTime += 1;
         id = countTaskAllTime;
+    }
+
+    public Task(String name, String description) { //Констурктор для использования в эпике(без записи статуса)
+        Name = name;
+        Description = description;
+        countTaskAllTime += 1;
+        id = countTaskAllTime;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
     }
 
     @Override
@@ -26,5 +49,15 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "Name='" + Name + '\'' +
+                ", id=" + id +
+                ", Description='" + Description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
