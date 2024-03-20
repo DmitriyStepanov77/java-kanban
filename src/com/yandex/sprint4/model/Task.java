@@ -1,29 +1,31 @@
+package com.yandex.sprint4.model;
+
 import java.util.Objects;
 
 public class Task {
     private static int countTaskAllTime = 0;
-    private String Name;
+    private String name;
     private int id;
-    private String Description;
+    private String description;
     protected TaskStatus status;
 
     public Task(String name, String description, TaskStatus status) {
-        Name = name;
-        Description = description;
+        this.name = name;
+        this.description = description;
         this.status = status;
         countTaskAllTime += 1;
         id = countTaskAllTime;
     }
 
     public Task(String name, String description) { //Констурктор для использования в эпике(без записи статуса)
-        Name = name;
-        Description = description;
+        this.name = name;
+        this.description = description;
         countTaskAllTime += 1;
         id = countTaskAllTime;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public int getId() {
@@ -31,7 +33,7 @@ public class Task {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public TaskStatus getStatus() {
@@ -43,7 +45,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(Name, task.Name) && Objects.equals(Description, task.Description) && status == task.status;
+        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status;
     }
 
     @Override
@@ -54,9 +56,9 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "Name='" + Name + '\'' +
+                "name='" + name + '\'' +
                 ", id=" + id +
-                ", Description='" + Description + '\'' +
+                ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
     }

@@ -1,21 +1,27 @@
+package com.yandex.sprint4.service;
+
+import com.yandex.sprint4.model.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class Manager {
     private HashMap<Integer, Task> taskList = new HashMap<>();
     private HashMap<Integer, Epic> epicList = new HashMap<>();
     private HashMap<Integer, Subtask> subtaskList = new HashMap<>();
 
-    public HashMap<Integer, Task> getTasksList() {
-        return taskList;
+    public List<Task> getTasksList() {
+        return new ArrayList<>(taskList.values());
     } //Получение всех задач
 
-    public HashMap<Integer, Epic> getEpicList() {
-        return epicList;
+    public List<Epic> getEpicList() {
+        return new ArrayList<>(epicList.values());
     } //Получение всех эпиков
 
-    public HashMap<Integer, Subtask> getSubtaskList() {
-        return subtaskList;
+    public List<Subtask> getSubtaskList() {
+        return new ArrayList<>(subtaskList.values());
     } //Получение всех подзадач
 
     public void add(Task task) {
@@ -77,10 +83,14 @@ public class Manager {
 
     public void removeAllEpic() {
         epicList.clear();
+        subtaskList.clear();
     } //Удаление всех эпиков
 
     public void removeAllSubtask() {
         subtaskList.clear();
+        for (Integer i : epicList.keySet()) {
+            updateEpicStatus(i);
+        }
     } //Удаление всех подзадач
 
     public void removeTask(int key) {
@@ -89,13 +99,30 @@ public class Manager {
     } //Удаление задачи
 
     public void removeEpic(int key) {
-        if(epicList.containsKey(key))
+        if(epicList.containsKey(key)) {
+            Epic epic = epicList.get(key); //Получаем эпик по ID
+            ArrayList<Integer> subtaskEpicList = epic.getSubtasksId(); //Создаем список ID подзадач эпика
+            if (subtaskEpicList != null) { //Проверяем наличие подзадач для эпика
+                System.out.println(subtaskEpicList);
+                for (Integer o : subtaskEpicList) {
+                   if (o != null && subtaskList.containsKey(o))
+                       subtaskList.remove(o);
+                }
+            }
             epicList.remove(key);
+        }
     } //Удаление эпика
 
     public void removeSubtask(int key) {
-        if(subtaskList.containsKey(key))
+        if(subtaskList.containsKey(key)) {
+            Integer epicId = subtaskList.get(key).getEpicId();
+            if(epicList.containsKey(epicId)) {
+                Epic epic = epicList.get(epicId);
+                epic.removeSubtask(key);
+                updateEpicStatus(epicId);
+            }
             subtaskList.remove(key);
+        }
     } //Удаление подзадачи
 
     public ArrayList<Subtask> getAllSubtaskToEpic(int epicId) {

@@ -1,7 +1,11 @@
+package com.yandex.sprint4.model;
+
+import com.yandex.sprint4.model.Task;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    ArrayList<Integer> subtasksId;
+    private ArrayList<Integer> subtasksId;
 
     public Epic(String name, String description, ArrayList<Integer> subtaskId) { //Конструктор для нескольких ID подзадач
         super(name, description);
@@ -25,5 +29,10 @@ public class Epic extends Task {
 
     public void setStatus(TaskStatus status) {
         super.status = status;
+    }
+
+    public void removeSubtask(Integer subtaskIdRemove) {
+        if(subtasksId.contains(subtaskIdRemove))
+            subtasksId.remove(subtaskIdRemove);
     }
 }
