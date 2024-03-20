@@ -1,7 +1,5 @@
 package com.yandex.sprint4.model;
 
-import com.yandex.sprint4.model.Task;
-
 public class Subtask extends Task {
     private int epicId = 0;
     public int getEpicId() {

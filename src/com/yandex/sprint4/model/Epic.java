@@ -1,7 +1,5 @@
 package com.yandex.sprint4.model;
 
-import com.yandex.sprint4.model.Task;
-
 import java.util.ArrayList;
 
 public class Epic extends Task {
