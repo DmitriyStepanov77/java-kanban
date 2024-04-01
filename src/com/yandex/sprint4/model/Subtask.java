@@ -14,4 +14,10 @@ public class Subtask extends Task {
     public Subtask(String name, String description, TaskStatus status) { //Конструктор без эпик ID
         super(name, description, status);
     }
+
+    public Subtask(Subtask subtask) {
+        super(subtask);
+        this.epicId = subtask.epicId;
+
+    }
 }

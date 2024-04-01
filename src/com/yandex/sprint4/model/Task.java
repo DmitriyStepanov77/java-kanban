@@ -3,25 +3,30 @@ package com.yandex.sprint4.model;
 import java.util.Objects;
 
 public class Task {
-    private static int countTaskAllTime = 0;
+
     private String name;
     private int id;
     private String description;
     protected TaskStatus status;
 
+
+
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
         this.description = description;
         this.status = status;
-        countTaskAllTime += 1;
-        id = countTaskAllTime;
     }
 
     public Task(String name, String description) { //Констурктор для использования в эпике(без записи статуса)
         this.name = name;
         this.description = description;
-        countTaskAllTime += 1;
-        id = countTaskAllTime;
+    }
+
+    public Task(Task task) {
+        this.name = task.name;
+        this.id = task.id;
+        this.description = task.description;
+        this.status = task.status;
     }
 
     public String getName() {
@@ -38,6 +43,22 @@ public class Task {
 
     public TaskStatus getStatus() {
         return status;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
     @Override
@@ -60,6 +81,7 @@ public class Task {
                 ", id=" + id +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                '}';
+                '}'+ "\n";
     }
+
 }

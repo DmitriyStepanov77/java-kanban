@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.yandex.sprint4.model.*;
-import com.yandex.sprint4.service.Manager;
+import com.yandex.sprint4.service.InMemoryTaskManager;
+import com.yandex.sprint4.service.Managers;
 
 public class Main {
 
     public static void main(String[] args) {
         //Тесты
-        Manager manager = new Manager();
+        InMemoryTaskManager inMemoryTaskManager = (InMemoryTaskManager) Managers.getDefault();
 
         System.out.println("Поехали!");
 
@@ -28,30 +29,40 @@ public class Main {
         Epic epic3 = new Epic("Эпик 3", "Описание эпика 3", 9);
         Subtask subtask4 = new Subtask("Подзадача 4", "Описание подзадачи 4", TaskStatus.IN_PROGRESS, 8);
 
-        manager.add(task1);
-        manager.add(task2);
+        inMemoryTaskManager.add(task1);
+        inMemoryTaskManager.add(task2);
 
-        manager.add(epic1);
-        manager.add(epic2);
+        inMemoryTaskManager.add(epic1);
+        inMemoryTaskManager.add(epic2);
 
-        manager.add(subtask1);
-        manager.add(subtask2);
-        manager.add(subtask3);
+        inMemoryTaskManager.add(subtask1);
+        inMemoryTaskManager.add(subtask2);
+        inMemoryTaskManager.add(subtask3);
 
-        manager.add(epic3);
-        manager.add(subtask4);
+        inMemoryTaskManager.add(epic3);
+        inMemoryTaskManager.add(subtask4);
 
-        System.out.println("Список обычных задач:");
-        System.out.println(manager.getTasksList());
+        Task task = inMemoryTaskManager.getTask(1);
+        task = inMemoryTaskManager.getTask(2);
+        task = inMemoryTaskManager.getEpic(3);
+        task = inMemoryTaskManager.getTask(1);
+        task = inMemoryTaskManager.getTask(2);
+        task = inMemoryTaskManager.getEpic(3);
+        task = inMemoryTaskManager.getTask(1);
+        task = inMemoryTaskManager.getTask(2);
+        task = inMemoryTaskManager.getEpic(3);
+        task = inMemoryTaskManager.getTask(1);
+        task = inMemoryTaskManager.getTask(2);
+        task = inMemoryTaskManager.getEpic(3);
+        System.out.println(inMemoryTaskManager.getHistory());
+        //System.out.println("Список подзадач:");
+        //System.out.println(manager.getSubtaskList());
 
-        System.out.println("Список подзадач:");
-        System.out.println(manager.getSubtaskList());
+        //System.out.println("Список эпиков:");
+        //System.out.println(manager.getEpicList());
 
-        System.out.println("Список эпиков:");
-        System.out.println(manager.getEpicList());
-
-        System.out.println("Свойства эпика 1:");
-        System.out.println(manager.getEpic(3));
+        //System.out.println("Свойства эпика 1:");
+        //System.out.println(manager.getEpic(3));
 
         //System.out.println("Список подзадач эпика 3:");
         //System.out.println(manager.getAllSubtaskToEpic(3));
@@ -66,12 +77,12 @@ public class Main {
         //System.out.println("Вывод подзадач:");
         //System.out.println(manager.getSubtaskList());
         //System.out.println(manager.getEpicList());
-        System.out.println("Удаление подзадач:");
-        manager.removeAllSubtask();
+        //System.out.println("Удаление подзадач:");
+        //manager.removeAllSubtask();
         //System.out.println(manager.getSubtaskList());
         //System.out.println("Удаление эпиков:");
         //manager.removeAllEpic();
-        System.out.println(manager.getEpicList());
+        //System.out.println(manager.getEpicList());
 
     }
 }

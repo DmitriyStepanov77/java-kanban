@@ -9,6 +9,7 @@ public class Epic extends Task {
         super(name, description);
         this.subtasksId = new ArrayList<>();
         subtasksId.addAll(subtaskId);
+
     }
 
     public Epic(String name, String description, int subtaskId) { //Конструктор для одного ID подзадачи
@@ -21,8 +22,17 @@ public class Epic extends Task {
         super(name, description);
     }
 
+    public Epic(Epic epic) {
+        super(epic);
+        this.subtasksId = epic.subtasksId;
+    }
+
     public ArrayList<Integer> getSubtasksId() {
         return subtasksId;
+    }
+
+    public void setSubtasksId(ArrayList<Integer> subtasksId) {
+        this.subtasksId = subtasksId;
     }
 
     public void setStatus(TaskStatus status) {
@@ -33,4 +43,5 @@ public class Epic extends Task {
         if(subtasksId.contains(subtaskIdRemove))
             subtasksId.remove(subtaskIdRemove);
     }
+
 }
