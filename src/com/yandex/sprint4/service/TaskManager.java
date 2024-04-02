@@ -8,64 +8,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
-    List<Task> getTasksList() //Получение всех задач
-    ;
+    List<Task> getAllTasksList(); //Получение всех задач
 
-    List<Epic> getEpicList() //Получение всех эпиков
-    ;
+    List<Epic> getAllEpics(); //Получение всех эпиков
 
-    List<Subtask> getSubtaskList() //Получение всех подзадач
-    ;
+    List<Subtask> getAllSubtasks(); //Получение всех подзадач
 
-    void add(Task task) //Добавление задачи
-    ;
+    void add(Task task); //Добавление задачи
 
-    void add(Epic epic) //Добавление эпика
-    ;
+    void add(Epic epic); //Добавление эпика
 
-    void add(Subtask subtask) //Добавление подзадачи
-    ;
+    void add(Subtask subtask); //Добавление подзадачи
 
-    void update(Task task) //Обновление задачи
-    ;
+    void update(Task task); //Обновление задачи
 
-    void update(Epic epic) //Обновление эпика
-    ;
+    void update(Epic epic); //Обновление эпика
 
-    void update(Subtask subtask) //Обновление подзадачи
-    ;
+    void update(Subtask subtask); //Обновление подзадачи
 
-    Task getTask(int key) //Получение задачи
-    ;
+    Task getTask(int key); //Получение задачи
 
-    Epic getEpic(int key) //Получение эпика
-    ;
+    Epic getEpic(int key); //Получение эпика
 
-    Subtask getSubtask(int key) //Получение подзадачи
-    ;
+    Subtask getSubtask(int key); //Получение подзадачи
 
-    void removeAllTask() //Удаление всех задач
-    ;
+    void removeAllTasks(); //Удаление всех задач
 
-    void removeAllEpic() //Удаление всех эпиков
-    ;
+    void removeAllEpics(); //Удаление всех эпиков
 
-    void removeAllSubtask() //Удаление всех подзадач
-    ;
+    void removeAllSubtasks(); //Удаление всех подзадач
 
-    void removeTask(int key) //Удаление задачи
-    ;
+    void removeTask(int key); //Удаление задачи
 
-    void removeEpic(int key) //Удаление эпика
-    ;
+    void removeEpic(int key); //Удаление эпика
 
-    void removeSubtask(int key) //Удаление подзадачи
-    ;
+    void removeSubtask(int key); //Удаление подзадачи
 
-    ArrayList<Subtask> getAllSubtaskToEpic(int epicId) //Получение подзадач эпика
-    ;
-    public List<Task> getHistory() //Получение истории
-    ;
+    ArrayList<Subtask> getAllSubtasksToEpic(int epicId); //Получение подзадач эпика
+
+    public List<Task> getHistory(); //Получение истории
 
 }
 
