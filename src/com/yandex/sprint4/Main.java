@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.yandex.sprint4.model.*;
-import com.yandex.sprint4.service.InMemoryHistoryManager;
 import com.yandex.sprint4.service.InMemoryTaskManager;
 import com.yandex.sprint4.service.Managers;
 
