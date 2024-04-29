@@ -19,7 +19,7 @@ public class Main {
         Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW);
         Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.NEW);
 
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(5,6,7)));
+        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(5, 6, 7)));
         Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
 
         Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1 Эпика 1", TaskStatus.NEW, 3);
