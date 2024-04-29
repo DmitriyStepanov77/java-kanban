@@ -128,8 +128,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeTask(int key) {
-        if(tasks.containsKey(key))
+        if(tasks.containsKey(key)) {
             tasks.remove(key);
+            historyManager.remove(key);
+        }
     } //Удаление задачи
 
     @Override
@@ -138,13 +140,15 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(key); //Получаем эпик по ID
             ArrayList<Integer> subtaskEpicList = epic.getSubtasksId(); //Создаем список ID подзадач эпика
             if (subtaskEpicList != null) { //Проверяем наличие подзадач для эпика
-                System.out.println(subtaskEpicList);
                 for (Integer o : subtaskEpicList) {
-                   if (o != null && subtasks.containsKey(o))
+                   if (o != null && subtasks.containsKey(o)) {
                        subtasks.remove(o);
+                       historyManager.remove(o);
+                   }
                 }
             }
             epics.remove(key);
+            historyManager.remove(key);
         }
     } //Удаление эпика
 
@@ -158,6 +162,7 @@ public class InMemoryTaskManager implements TaskManager {
                 updateEpicStatus(epicId);
             }
             subtasks.remove(key);
+            historyManager.remove(key);
         }
     } //Удаление подзадачи
     @Override
