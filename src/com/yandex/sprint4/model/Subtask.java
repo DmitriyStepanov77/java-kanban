@@ -2,6 +2,7 @@ package com.yandex.sprint4.model;
 
 public class Subtask extends Task {
     private int epicId = 0;
+
     public int getEpicId() {
         return epicId;
     }

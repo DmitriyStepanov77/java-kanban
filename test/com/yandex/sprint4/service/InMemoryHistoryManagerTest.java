@@ -11,6 +11,7 @@ class InMemoryHistoryManagerTest {
     InMemoryHistoryManager inMemoryHistoryManager;
     Task task1;
     Task task2;
+
     @BeforeEach
     public void beforeEach() {
         inMemoryHistoryManager = new InMemoryHistoryManager();
