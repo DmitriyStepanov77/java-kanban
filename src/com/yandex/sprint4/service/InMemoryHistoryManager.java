@@ -7,15 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
     private Node first;
     private Node last;
     private Map<Integer, Node> history = new HashMap<>();
+
     @Override
     public List<Task> getHistory() { //Вывод истории
         List<Task> historyList = new ArrayList<>();
         Node currentNode = first;
-        while(currentNode != null) {
+        while (currentNode != null) {
             historyList.add(currentNode.data);
             currentNode = currentNode.next;
         }
@@ -64,7 +65,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         if (node != null) {
             Node prev = node.prev;
             Node next = node.next;
-            if(prev == null) {
+            if (prev == null) {
                 next.prev = null;
                 first = next;
             } else if (next == null) {
