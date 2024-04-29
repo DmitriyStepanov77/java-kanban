@@ -10,7 +10,6 @@ public class Task {
     protected TaskStatus status;
 
 
-
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
         this.description = description;
@@ -81,7 +80,7 @@ public class Task {
                 ", id=" + id +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                '}'+ "\n";
+                '}' + "\n";
     }
 
 }
