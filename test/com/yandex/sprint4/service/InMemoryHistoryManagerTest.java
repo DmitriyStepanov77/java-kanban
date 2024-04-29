@@ -39,4 +39,10 @@ class InMemoryHistoryManagerTest {
         assertEquals("2", inMemoryHistoryManager.getHistory().get(0).getName());
     }
 
+    public void getHistoryTestAfterRemoveAll() {
+        inMemoryHistoryManager.remove(task1.getId());
+        inMemoryHistoryManager.remove(task2.getId());
+        assertEquals("", inMemoryHistoryManager.getHistory().get(0).getName());
+    }
+
 }
