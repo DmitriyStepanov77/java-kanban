@@ -36,6 +36,7 @@ public class Main {
         inMemoryTaskManager.add(subtask3);
 
         System.out.println("Вывод истории. Вариант 1:");
+        System.out.println(inMemoryTaskManager.getHistory());
         Task task = inMemoryTaskManager.getTask(1);
         task = inMemoryTaskManager.getTask(2);
         task = inMemoryTaskManager.getEpic(3);
