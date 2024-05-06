@@ -22,7 +22,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void testUpdateTaskTest() {
+    public void updateTaskTest() {
         Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW);
         inMemoryTaskManager.add(task1);
         Task taskTemp = inMemoryTaskManager.getTask(1);
@@ -33,8 +33,8 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void testUpdateSubtaskTest() {
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(2,3)));
+    public void updateSubtaskTest() {
+        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(2, 3)));
 
         Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", TaskStatus.NEW, 1);
         Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", TaskStatus.DONE, 1);
@@ -49,6 +49,27 @@ class InMemoryTaskManagerTest {
 
         assertEquals(TaskStatus.DONE, inMemoryTaskManager.getEpic(1).getStatus());
 
+    }
+
+    @Test
+    public void addAndRemoveEpicTest() {
+        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(2, 3)));
+
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", TaskStatus.DONE, 1);
+
+        inMemoryTaskManager.add(epic1);
+        inMemoryTaskManager.add(subtask1);
+        inMemoryTaskManager.add(subtask2);
+
+        inMemoryTaskManager.getEpic(1);
+        inMemoryTaskManager.getSubtask(2);
+
+        assertEquals("Эпик 1", inMemoryTaskManager.getHistory().get(0).getName());
+
+        inMemoryTaskManager.removeEpic(1);
+
+        assertEquals(new ArrayList<>(), inMemoryTaskManager.getHistory());
     }
 
 
