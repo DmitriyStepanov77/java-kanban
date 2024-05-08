@@ -24,7 +24,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 while (bufferedReader.ready()) {
                     String str = bufferedReader.readLine();
-                    String split[] = str.split(";");
+                    String[] split = str.split(";");
                     switch (TaskType.valueOf(split[0])) {
                         case TaskType.TASK -> fileManger.tasks.put(toTask(split).getId(), toTask(split));
                         case TaskType.SUBTASK -> fileManger.subtasks.put(toSubtask(split).getId(), toSubtask(split));
