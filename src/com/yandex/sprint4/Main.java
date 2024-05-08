@@ -1,10 +1,13 @@
 package com.yandex.sprint4;
 
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.yandex.sprint4.model.*;
+import com.yandex.sprint4.service.FileBackedTaskManager;
 import com.yandex.sprint4.service.InMemoryTaskManager;
 import com.yandex.sprint4.service.Managers;
 
@@ -58,5 +61,16 @@ public class Main {
         System.out.println("Вывод истории. Вариант 4:");
         inMemoryTaskManager.removeEpic(3);
         System.out.println(inMemoryTaskManager.getHistory());
+
+        System.out.println("Спринт 7. Пользовательский сценарий");
+        FileBackedTaskManager fileTaskManager = FileBackedTaskManager.loadFromFile(new File("Save.csv"));
+        fileTaskManager.add(task1);
+        fileTaskManager.add(task2);
+        fileTaskManager.add(epic1);
+        fileTaskManager.add(epic2);
+        System.out.println(fileTaskManager.getAllTasksList());
+        System.out.println(fileTaskManager.getAllEpics());
+        fileTaskManager.removeAllEpics();
+
     }
 }
