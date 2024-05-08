@@ -47,6 +47,9 @@ class FileBackedTaskManagerTest {
 
     @Test
     void removeTaskTest() throws IOException {
+        fileTaskManager.add(task1);
+        fileTaskManager.add(task2);
+
         fileTaskManager.removeTask(1);
 
         List<String> strs = Files.readAllLines(Path.of("Save.csv"));
