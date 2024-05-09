@@ -24,11 +24,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 while (bufferedReader.ready()) {
                     String str = bufferedReader.readLine();
+                    if (str.indexOf(";") == -1) {
+                        continue;
+                    }
                     String[] split = str.split(";");
-                    switch (TaskType.valueOf(split[0])) {
-                        case TaskType.TASK -> fileManger.tasks.put(toTask(split).getId(), toTask(split));
-                        case TaskType.SUBTASK -> fileManger.subtasks.put(toSubtask(split).getId(), toSubtask(split));
-                        case TaskType.EPIC -> fileManger.epics.put(toEpic(split).getId(), toEpic(split));
+                    if ((split.length == 5) & ((TaskType.valueOf(split[0]) == TaskType.TASK)
+                            || (TaskType.valueOf(split[0]) == TaskType.SUBTASK))
+                            || ((split.length == 6) & (TaskType.valueOf(split[0]) == TaskType.EPIC))) {
+                        switch (TaskType.valueOf(split[0])) {
+                            case TaskType.TASK -> fileManger.tasks.put(toTask(split).getId(), toTask(split));
+                            case TaskType.SUBTASK ->
+                                    fileManger.subtasks.put(toSubtask(split).getId(), toSubtask(split));
+                            case TaskType.EPIC -> fileManger.epics.put(toEpic(split).getId(), toEpic(split));
+                        }
                     }
                 }
             } catch (IOException e) {
