@@ -150,9 +150,9 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(key); //Получаем эпик по ID
             ArrayList<Integer> subtaskEpicList = epic.getSubtasksId(); //Создаем список ID подзадач эпика
             if (subtaskEpicList != null) { //Проверяем наличие подзадач для эпика
-                subtaskEpicList.stream().
-                        filter(Objects::nonNull).
-                        forEach(o -> {
+                subtaskEpicList.stream()
+                        .filter(Objects::nonNull)
+                        .forEach(o -> {
                             subtasks.remove(o);
                             historyManager.remove(o);
                         });
@@ -184,9 +184,9 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(epicId); //Получаем эпик по ID
             ArrayList<Integer> subtaskEpicList = epic.getSubtasksId(); //Создаем список ID подзадач эпика
             if (subtaskEpicList != null) {
-                return new ArrayList<>(subtaskEpicList.stream().
-                        map(o -> subtasks.get(o)).
-                        collect(Collectors.toList()));
+                return new ArrayList<>(subtaskEpicList.stream()
+                        .map(o -> subtasks.get(o))
+                        .collect(Collectors.toList()));
             } else {
                 return null;
             }
@@ -243,29 +243,29 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void updateEpicDuration(Epic epic, ArrayList<Subtask> subtaskToEpic) {
-        epic.setDuration(subtaskToEpic.stream().
-                filter(Objects::nonNull).
-                map(Subtask::getDuration).
-                filter(Objects::nonNull).
-                reduce(Duration.ZERO, Duration::plus)); //Получаем суммарную продолжительность всех подзадач
+        epic.setDuration(subtaskToEpic.stream()
+                .filter(Objects::nonNull)
+                .map(Subtask::getDuration)
+                .filter(Objects::nonNull)
+                .reduce(Duration.ZERO, Duration::plus)); //Получаем суммарную продолжительность всех подзадач
     }
 
     private void updateEpicStartTime(Epic epic, ArrayList<Subtask> subtaskToEpic) {
-        epic.setStartTime(subtaskToEpic.stream().
-                filter(Objects::nonNull).
-                map(Subtask::getStartTime).
-                filter(Objects::nonNull).
-                min(Comparator.comparing(startTime -> startTime)).
-                orElse(null)); //Получаем время начала самой ранней подзадачи
+        epic.setStartTime(subtaskToEpic.stream()
+                .filter(Objects::nonNull)
+                .map(Subtask::getStartTime)
+                .filter(Objects::nonNull)
+                .min(Comparator.comparing(startTime -> startTime))
+                .orElse(null)); //Получаем время начала самой ранней подзадачи
     }
 
     private void updateEpicEndTime(Epic epic, ArrayList<Subtask> subtaskToEpic) {
-        epic.setStartTime(subtaskToEpic.stream().
-                filter(Objects::nonNull).
-                map(Subtask::getEndTime).
-                filter(Objects::nonNull).
-                max(Comparator.comparing(endTime -> endTime)).
-                orElse(null)); //Получаем время окончания самой поздней задачи
+        epic.setStartTime(subtaskToEpic.stream()
+                .filter(Objects::nonNull)
+                .map(Subtask::getEndTime)
+                .filter(Objects::nonNull)
+                .max(Comparator.comparing(endTime -> endTime))
+                .orElse(null)); //Получаем время окончания самой поздней задачи
     }
 
     private void addSortedTasks(Task task) {
