@@ -1,19 +1,16 @@
 package com.yandex.sprint4.service;
 
-import com.yandex.sprint4.model.Epic;
 import com.yandex.sprint4.model.Subtask;
 import com.yandex.sprint4.model.Task;
 import com.yandex.sprint4.model.TaskStatus;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
+class InMemoryTaskManagerTest extends TaskManagerTest {
     InMemoryTaskManager inMemoryTaskManager;
 
     @BeforeEach
@@ -34,11 +31,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void updateSubtaskTest() {
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(2, 3)));
-
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", TaskStatus.DONE, 1);
-
         inMemoryTaskManager.add(epic1);
         inMemoryTaskManager.add(subtask1);
         inMemoryTaskManager.add(subtask2);
@@ -48,16 +40,10 @@ class InMemoryTaskManagerTest {
         inMemoryTaskManager.update(subtaskTemp);
 
         assertEquals(TaskStatus.DONE, inMemoryTaskManager.getEpic(1).getStatus());
-
     }
 
     @Test
     public void addAndRemoveEpicTest() {
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(2, 3)));
-
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", TaskStatus.DONE, 1);
-
         inMemoryTaskManager.add(epic1);
         inMemoryTaskManager.add(subtask1);
         inMemoryTaskManager.add(subtask2);
@@ -70,6 +56,40 @@ class InMemoryTaskManagerTest {
         inMemoryTaskManager.removeEpic(1);
 
         assertEquals(new ArrayList<>(), inMemoryTaskManager.getHistory());
+    }
+
+    @Test
+    public void addAndRemoveTasksWithTimeTest() {
+        inMemoryTaskManager.add(task1);
+        inMemoryTaskManager.add(task2);
+        inMemoryTaskManager.add(task3);
+
+        assertEquals("Задача 2", inMemoryTaskManager.getPrioritizedTasks().get(0).getName());
+        assertEquals("Задача 1", inMemoryTaskManager.getPrioritizedTasks().get(2).getName());
+
+        inMemoryTaskManager.removeTask(2);
+
+        assertEquals("Задача 3", inMemoryTaskManager.getPrioritizedTasks().get(0).getName());
+    }
+
+    @Test
+    public void chechIntersectionIntervalTest() {
+        Task task4 = new Task("Задача 4", "Описание задачи 4", TaskStatus.NEW,
+                Duration.ofHours(20), LocalDateTime.of(2024, 10, 12, 16, 24));
+
+        inMemoryTaskManager.add(task1);
+        inMemoryTaskManager.add(task2);
+        inMemoryTaskManager.add(task3);
+
+        inMemoryTaskManager.add(task4);
+
+        assertEquals(null, inMemoryTaskManager.getTask(4));
+
+        task4.setStartTime(LocalDateTime.of(2024, 10, 15, 15, 20));
+
+        inMemoryTaskManager.add(task4);
+
+        assertEquals(task4, inMemoryTaskManager.getTask(4));
     }
 
 

@@ -2,6 +2,8 @@ package com.yandex.sprint4;
 
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,8 +19,10 @@ public class Main {
 
         System.out.println("Спринт 6. Пользовательский сценарий");
 
-        Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW);
-        Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.NEW);
+        Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW,
+                Duration.ofHours(20), LocalDateTime.of(2023, 10, 11, 14, 23));
+        Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.NEW,
+                Duration.ofHours(203), LocalDateTime.of(2023, 9, 11, 14, 23));
 
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", new ArrayList<>(Arrays.asList(5, 6, 7)));
         Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
@@ -51,6 +55,16 @@ public class Main {
         System.out.println("Вывод истории. Вариант 2:");
         task = inMemoryTaskManager.getTask(2);
         task = inMemoryTaskManager.getEpic(3);
+        System.out.println(inMemoryTaskManager.getHistory());
+
+        System.out.println("Вывод истории. Вариант 2.1:");
+        System.out.println(inMemoryTaskManager.getHistory());
+        inMemoryTaskManager.removeAllEpics();
+        System.out.println(inMemoryTaskManager.getAllTasksList());
+        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println("Вывод истории. Вариант 2.2:");
+        inMemoryTaskManager.removeAllTasks();
+        System.out.println(inMemoryTaskManager.getAllTasksList());
         System.out.println(inMemoryTaskManager.getHistory());
 
         System.out.println("Вывод истории. Вариант 3:");

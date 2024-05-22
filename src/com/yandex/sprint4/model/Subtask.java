@@ -1,5 +1,8 @@
 package com.yandex.sprint4.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
     private int epicId = 0;
 
@@ -9,6 +12,12 @@ public class Subtask extends Task {
 
     public Subtask(String name, String description, TaskStatus status, int epicId) { //Конструктор для одного эпик ID
         super(name, description, status);
+        this.epicId = epicId;
+    }
+
+    public Subtask(String name, String description, TaskStatus status, int epicId,
+                   Duration duration, LocalDateTime startTime) { //Конструктор со временем
+        super(name, description, status, duration, startTime);
         this.epicId = epicId;
     }
 

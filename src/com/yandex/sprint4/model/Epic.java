@@ -1,15 +1,16 @@
 package com.yandex.sprint4.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
     private ArrayList<Integer> subtasksId;
+    private LocalDateTime endTime;
 
     public Epic(String name, String description, ArrayList<Integer> subtaskId) { //Конструктор для нескольких ID подзадач
         super(name, description);
         this.subtasksId = new ArrayList<>();
         subtasksId.addAll(subtaskId);
-
     }
 
     public Epic(String name, String description, int subtaskId) { //Конструктор для одного ID подзадачи
@@ -44,4 +45,12 @@ public class Epic extends Task {
             subtasksId.remove(subtaskIdRemove);
     }
 
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 }
