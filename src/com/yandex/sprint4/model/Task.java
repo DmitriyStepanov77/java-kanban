@@ -3,7 +3,6 @@ package com.yandex.sprint4.model;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Task {
 
