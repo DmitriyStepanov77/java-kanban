@@ -6,6 +6,7 @@ import com.yandex.sprint4.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public interface TaskManager {
     List<Task> getAllTasksList(); //Получение всех задач
@@ -48,6 +49,7 @@ public interface TaskManager {
 
     public List<Task> getHistory(); //Получение истории
 
+    public List <Task> getPrioritizedTasks();
 }
 
 

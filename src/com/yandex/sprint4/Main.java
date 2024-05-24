@@ -16,7 +16,6 @@ public class Main {
 
     public static void main(String[] args) {
         InMemoryTaskManager inMemoryTaskManager = (InMemoryTaskManager) Managers.getDefault();
-
         System.out.println("Спринт 6. Пользовательский сценарий");
 
         Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW,

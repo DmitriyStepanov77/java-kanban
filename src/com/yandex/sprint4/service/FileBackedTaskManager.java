@@ -146,7 +146,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
 
     private String toStringFromCSVSubtask(Subtask subtask) {
         return TaskType.SUBTASK + ";" + subtask.getId() + ";" + subtask.getName() + ';' + subtask.getDescription() + ";"
-                + subtask.getStatus() + ";" + subtask.getEpicId() + ";" + subtask.getDuration().get(ChronoUnit.MINUTES) + ";"
+                + subtask.getStatus() + ";" + subtask.getEpicId() + ";" + subtask.getDuration() + ";"
                 + subtask.getStartTime();
     }
 

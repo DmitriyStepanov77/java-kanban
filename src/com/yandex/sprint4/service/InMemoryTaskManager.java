@@ -276,25 +276,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     private boolean checkTimeIntersection(Task task) {
         List<Task> sortedList = getPrioritizedTasks();
-        if (sortedList.size() > 0 && task.getStartTime() != null && task.getDuration() != null) {
-            //Проверяем граничные условия - возможно временной интервал задачи лежит вне интервала
-            // [Начало первой задачи; конец последней задачи]
-            if (sortedList.get(0).getStartTime().isAfter(task.getEndTime())) {
-                return true;
-            }
-            if (sortedList.get(sortedList.size() - 1).getEndTime().isBefore(task.getStartTime())) {
-                return true;
-            }
-            //Если временной интервал задачи лежит в интервале [Начало первой задачи; конец последней задачи]
-            for (int i = 0; i <= sortedList.size() - 2; i++) {
-                if (sortedList.get(i).getEndTime().isBefore(task.getStartTime()) &&
-                        sortedList.get(i + 1).getStartTime().isAfter(task.getEndTime()))
-                    return true;
-            }
-            return false;
-        } else {
-            return true;
-        }
+        long count = sortedList.stream()
+                .filter(o -> (o.getStartTime().isBefore(task.getStartTime())
+                        && o.getEndTime().isAfter(task.getStartTime())) ||
+                        (o.getStartTime().isBefore(task.getEndTime())
+                                && o.getEndTime().isAfter(task.getEndTime()))).count();
+        return count == 0;
     }
 
 

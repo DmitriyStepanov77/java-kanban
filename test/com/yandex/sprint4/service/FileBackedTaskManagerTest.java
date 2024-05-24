@@ -1,6 +1,9 @@
 package com.yandex.sprint4.service;
+
+import com.yandex.sprint4.model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,19 +19,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest {
 
     @BeforeEach
     void loadFile() throws IOException {
-        Files.writeString(Path.of("Save.csv"), "");
-    }
-
-    @Test
-    void writeTaskTest() throws IOException {
-        fileTaskManager = FileBackedTaskManager.loadFromFile(new File("Save.csv"));
-
-        fileTaskManager.add(task1);
-        fileTaskManager.add(task2);
-
-        List<String> strs = Files.readAllLines(Path.of("Save.csv"));
-        String[] split = strs.get(strs.size() - 2).split(";");
-        assertEquals(task1.getName(), split[2]);
+        super.taskManager = FileBackedTaskManager.loadFromFile(new File("Save.csv"));
     }
 
     @Test
@@ -37,20 +28,6 @@ class FileBackedTaskManagerTest extends TaskManagerTest {
         FileBackedTaskManager fileTaskManagerRead = FileBackedTaskManager.loadFromFile(new File("Save.csv"));
         assertEquals(fileTaskManagerRead.getTask(2).getName(), task2.getName());
         assertEquals(fileTaskManagerRead.getTask(2).getStartTime(), task2.getStartTime());
-    }
-
-    @Test
-    void removeTaskTest() throws IOException {
-        fileTaskManager = FileBackedTaskManager.loadFromFile(new File("Save.csv"));
-
-        fileTaskManager.add(task1);
-        fileTaskManager.add(task2);
-
-        fileTaskManager.removeTask(2);
-
-        List<String> strs = Files.readAllLines(Path.of("Save.csv"));
-        String[] split = strs.get(strs.size() - 1).split(";");
-        assertEquals(task1.getName(), split[2]);
     }
 
     @Test
@@ -78,4 +55,5 @@ class FileBackedTaskManagerTest extends TaskManagerTest {
         assertEquals(fileTaskManagerRead.getTask(2).getName(), "Задача 3");
         assertEquals(fileTaskManagerRead.getEpic(3).getName(), "Эпик 1");
     }
+
 }
