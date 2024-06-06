@@ -1,5 +1,7 @@
 package com.yandex.sprint4.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -8,6 +10,8 @@ public class Task {
     private int id;
     private String description;
     protected TaskStatus status;
+    private Duration duration;
+    private LocalDateTime startTime;
 
 
     public Task(String name, String description, TaskStatus status) {
@@ -26,6 +30,16 @@ public class Task {
         this.id = task.id;
         this.description = task.description;
         this.status = task.status;
+        this.duration = task.duration;
+        this.startTime = task.startTime;
+    }
+
+    public Task(String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     public String getName() {
@@ -44,6 +58,14 @@ public class Task {
         return status;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -60,12 +82,16 @@ public class Task {
         this.status = status;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status;
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime != null ? startTime.plus(duration) : null;
     }
 
     @Override
@@ -80,7 +106,16 @@ public class Task {
                 ", id=" + id +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                '}' + "\n";
+                ", duration=" + duration +
+                ", startTime=" + startTime +
+                '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status && Objects.equals(duration, task.duration) && Objects.equals(startTime, task.startTime);
+    }
 }

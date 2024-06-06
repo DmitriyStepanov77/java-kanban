@@ -6,6 +6,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
@@ -28,9 +30,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                         continue;
                     }
                     String[] split = str.split(";");
-                    if ((split.length == 5) & ((TaskType.valueOf(split[0]) == TaskType.TASK)
+                    if ((split.length == 7) & ((TaskType.valueOf(split[0]) == TaskType.TASK)
                             || (TaskType.valueOf(split[0]) == TaskType.SUBTASK))
-                            || ((split.length == 6) & (TaskType.valueOf(split[0]) == TaskType.EPIC))) {
+                            || ((split.length == 8) & (TaskType.valueOf(split[0]) == TaskType.EPIC))) {
                         switch (TaskType.valueOf(split[0])) {
                             case TaskType.TASK -> fileManger.tasks.put(toTask(split).getId(), toTask(split));
                             case TaskType.SUBTASK ->
@@ -138,12 +140,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
 
     private String toStringFromCSVTask(Task task) {
         return TaskType.TASK + ";" + task.getId() + ";" + task.getName() + ';' + task.getDescription() + ";"
-                + task.getStatus();
+                + task.getStatus() + ";" + task.getDuration() + ";" + task.getStartTime();
     }
 
     private String toStringFromCSVSubtask(Subtask subtask) {
         return TaskType.SUBTASK + ";" + subtask.getId() + ";" + subtask.getName() + ';' + subtask.getDescription() + ";"
-                + subtask.getStatus() + ";" + subtask.getEpicId();
+                + subtask.getStatus() + ";" + subtask.getEpicId() + ";" + subtask.getDuration() + ";"
+                + subtask.getStartTime();
     }
 
     private String toStringFromCSVEpic(Epic epic) {
@@ -152,13 +155,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     private static Task toTask(String[] values) {
-        Task task = new Task(values[2], values[3], TaskStatus.valueOf(values[4]));
+        Duration duration = values[5].equals("null") ? null : Duration.parse(values[5]);
+        LocalDateTime startTime = values[6].equals("null") ? null : LocalDateTime.parse(values[6]);
+        Task task = new Task(values[2], values[3], TaskStatus.valueOf(values[4]),
+                duration, startTime);
         task.setId(Integer.parseInt(values[1]));
         return task;
     }
 
     private static Subtask toSubtask(String[] values) {
-        Subtask subtask = new Subtask(values[2], values[3], TaskStatus.valueOf(values[4]), Integer.parseInt(values[5]));
+        Duration duration = values[6].equals("null") ? null : Duration.parse(values[6]);
+        LocalDateTime startTime = values[7].equals("null") ? null : LocalDateTime.parse(values[7]);
+        Subtask subtask = new Subtask(values[2], values[3], TaskStatus.valueOf(values[4]), Integer.parseInt(values[5]),
+                duration, startTime);
         subtask.setId(Integer.parseInt(values[1]));
         return subtask;
     }
