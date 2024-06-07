@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.logging.Logger;
 
+
+
 public class InMemoryTaskManager implements TaskManager {
     private static final Logger log = Logger.getGlobal();
     private int id = 1;
@@ -36,13 +38,15 @@ public class InMemoryTaskManager implements TaskManager {
     } //Получение всех подзадач
 
     @Override
-    public void add(Task task) {
+    public boolean add(Task task) {
         if (checkTimeIntersection(task)) {
             task.setId(id);
             tasks.put(task.getId(), task);
             addSortedTasks(tasks.get(id));
             id++;
-        }
+            return true;
+        } else
+            return false;
     } //Добавление задачи
 
     @Override
@@ -54,7 +58,7 @@ public class InMemoryTaskManager implements TaskManager {
     } //Добавление эпика
 
     @Override
-    public void add(Subtask subtask) {
+    public boolean add(Subtask subtask) {
         if (checkTimeIntersection(subtask)) {
             subtask.setId(id);
             subtasks.put(subtask.getId(), subtask);
@@ -63,16 +67,20 @@ public class InMemoryTaskManager implements TaskManager {
             }
             addSortedTasks(subtasks.get(id));
             id++;
-        }
+            return true;
+        } else
+            return false;
     } //Добавление подзадачи
 
     @Override
-    public void update(Task task) {
+    public boolean update(Task task) {
         if (checkTimeIntersection(task)) {
-            sortedTasks.remove(subtasks.get(task.getId()));
+            sortedTasks.remove(tasks.get(task.getId()));
             tasks.replace(task.getId(), task);
             addSortedTasks(task);
-        }
+            return true;
+        } else
+            return false;
     } //Обновление задачи
 
     @Override
@@ -82,7 +90,7 @@ public class InMemoryTaskManager implements TaskManager {
     } //Обновление эпика
 
     @Override
-    public void update(Subtask subtask) {
+    public boolean update(Subtask subtask) {
         if (checkTimeIntersection(subtask)) {
             sortedTasks.remove(subtasks.get(subtask.getId()));
             subtasks.replace(subtask.getId(), subtask);
@@ -90,7 +98,9 @@ public class InMemoryTaskManager implements TaskManager {
             if (subtask.getEpicId() != 0) {
                 updateEpic(subtask.getEpicId());
             }
-        }
+            return true;
+        } else
+            return false;
     } //Обновление подзадачи
 
     @Override
@@ -262,7 +272,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void updateEpicEndTime(Epic epic, ArrayList<Subtask> subtaskToEpic) {
-        epic.setStartTime(subtaskToEpic.stream()
+        epic.setEndTime(subtaskToEpic.stream()
                 .filter(Objects::nonNull)
                 .map(Subtask::getEndTime)
                 .filter(Objects::nonNull)
@@ -277,19 +287,23 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean checkTimeIntersection(Task task) {
-        List<Task> sortedList = getPrioritizedTasks();
-        List<Task> taskIntersection = sortedList.stream()
-                .filter(o -> o.getId() != task.getId())
-                .filter(o -> (o.getStartTime().isBefore(task.getStartTime())
-                        && o.getEndTime().isAfter(task.getStartTime())) ||
-                        (o.getStartTime().isBefore(task.getEndTime())
-                                && o.getEndTime().isAfter(task.getEndTime()))).toList();
-        if (!taskIntersection.isEmpty()) {
-            log.warning("Задача " + task.getName() + " пересекается с задачами: " +
-                    taskIntersection.stream()
-                            .map(Task::getName)
-                            .toList());
-            return false;
+        if(task.getStartTime() != null) {
+            List<Task> sortedList = getPrioritizedTasks();
+            List<Task> taskIntersection = sortedList.stream()
+                    .filter(o -> o.getId() != task.getId())
+                    .filter(o -> (o.getStartTime().isBefore(task.getStartTime())
+                            && o.getEndTime().isAfter(task.getStartTime())) ||
+                            (o.getStartTime().isBefore(task.getEndTime())
+                                    && o.getEndTime().isAfter(task.getEndTime()))).toList();
+            if (!taskIntersection.isEmpty()) {
+                log.warning("Задача " + task.getName() + " пересекается с задачами: " +
+                        taskIntersection.stream()
+                                .map(Task::getName)
+                                .toList());
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return true;
         }
