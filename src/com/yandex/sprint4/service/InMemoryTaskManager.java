@@ -7,8 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.logging.Logger;
 
-
-
 public class InMemoryTaskManager implements TaskManager {
     private static final Logger log = Logger.getGlobal();
     private int id = 1;
@@ -287,7 +285,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean checkTimeIntersection(Task task) {
-        if(task.getStartTime() != null) {
+        if (task.getStartTime() != null) {
             List<Task> sortedList = getPrioritizedTasks();
             List<Task> taskIntersection = sortedList.stream()
                     .filter(o -> o.getId() != task.getId())
