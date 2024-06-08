@@ -14,17 +14,17 @@ public interface TaskManager {
 
     List<Subtask> getAllSubtasks(); //Получение всех подзадач
 
-    void add(Task task); //Добавление задачи
+    boolean add(Task task); //Добавление задачи
 
     void add(Epic epic); //Добавление эпика
 
-    void add(Subtask subtask); //Добавление подзадачи
+    boolean add(Subtask subtask); //Добавление подзадачи
 
-    void update(Task task); //Обновление задачи
+    boolean update(Task task); //Обновление задачи
 
     void update(Epic epic); //Обновление эпика
 
-    void update(Subtask subtask); //Обновление подзадачи
+    boolean update(Subtask subtask); //Обновление подзадачи
 
     Task getTask(int key); //Получение задачи
 

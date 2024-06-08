@@ -49,9 +49,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     @Override
-    public void add(Task task) {
-        super.add(task);
-        save();
+    public boolean add(Task task) {
+        if (super.add(task)) {
+            save();
+            return true;
+        } else
+            return false;
     }
 
     @Override
@@ -61,15 +64,21 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     @Override
-    public void add(Subtask subtask) {
-        super.add(subtask);
-        save();
+    public boolean add(Subtask subtask) {
+        if (super.add(subtask)) {
+            save();
+            return true;
+        } else
+            return false;
     }
 
     @Override
-    public void update(Task task) {
-        super.update(task);
-        save();
+    public boolean update(Task task) {
+        if (super.update(task)) {
+            save();
+            return true;
+        } else
+            return false;
     }
 
     @Override
@@ -79,9 +88,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     @Override
-    public void update(Subtask subtask) {
-        super.update(subtask);
-        save();
+    public boolean update(Subtask subtask) {
+        if (super.update(subtask)) {
+            save();
+            return true;
+        } else
+            return false;
     }
 
     @Override
