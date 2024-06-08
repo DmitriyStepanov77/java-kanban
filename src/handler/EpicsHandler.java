@@ -5,11 +5,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.yandex.sprint4.model.Epic;
 import com.yandex.sprint4.service.TaskManager;
-import org.junit.jupiter.api.parallel.Execution;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.NoSuchElementException;
 
 public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
 

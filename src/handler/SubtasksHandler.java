@@ -8,7 +8,6 @@ import com.yandex.sprint4.service.TaskManager;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.NoSuchElementException;
 
 public class SubtasksHandler extends BaseHttpHandler implements HttpHandler {
 

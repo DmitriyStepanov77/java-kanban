@@ -6,7 +6,6 @@ import com.sun.net.httpserver.HttpHandler;
 import com.yandex.sprint4.service.TaskManager;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 
 public class PrioritazedHandler extends BaseHttpHandler implements HttpHandler {
 
