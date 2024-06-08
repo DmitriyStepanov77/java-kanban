@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.yandex.sprint4.model.Epic;
 import com.yandex.sprint4.service.TaskManager;
+import org.junit.jupiter.api.parallel.Execution;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -30,7 +31,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
             } else {
                 sendError(exchange);
             }
-        } catch (NoSuchElementException | IllegalArgumentException | Error e) {
+        } catch (Exception e) {
             sendError(exchange);
         }
     }
@@ -46,7 +47,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
                 Gson gson = getJson();
                 sendText(exchange, gson.toJson(epic));
             } else {
-                sendNotGound(exchange);
+                sendNotFound(exchange);
             }
         }
     }
@@ -77,7 +78,7 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
                 manager.removeEpic(Integer.parseInt(split[2]));
                 sendText(exchange, "Эпик с Id = " + split[2] + " успешно удален!");
             } else {
-                sendNotGound(exchange);
+                sendNotFound(exchange);
             }
         }
     }

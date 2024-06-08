@@ -30,7 +30,7 @@ public class SubtasksHandler extends BaseHttpHandler implements HttpHandler {
             } else {
                 sendError(exchange);
             }
-        } catch (NoSuchElementException | IllegalArgumentException | Error e) {
+        } catch (Exception e) {
             sendError(exchange);
         }
     }
@@ -46,7 +46,7 @@ public class SubtasksHandler extends BaseHttpHandler implements HttpHandler {
                 Gson gson = getJson();
                 sendText(exchange, gson.toJson(subtask));
             } else {
-                sendNotGound(exchange);
+                sendNotFound(exchange);
             }
         }
     }
@@ -81,7 +81,7 @@ public class SubtasksHandler extends BaseHttpHandler implements HttpHandler {
                 manager.removeSubtask(Integer.parseInt(split[2]));
                 sendText(exchange, "Подзадача с Id = " + split[2] + " успешно удалена!");
             } else {
-                sendNotGound(exchange);
+                sendNotFound(exchange);
             }
         }
     }

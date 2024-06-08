@@ -24,7 +24,7 @@ public class PrioritazedHandler extends BaseHttpHandler implements HttpHandler {
             } else {
                 sendError(exchange);
             }
-        } catch (NoSuchElementException | IllegalArgumentException | Error e) {
+        } catch (Exception e) {
             sendError(exchange);
         }
     }

@@ -26,6 +26,6 @@ public class HttpTaskServer {
     }
 
     public void stop() {
-        httpServer.stop(0);
+        httpServer.stop(1);
     }
 }

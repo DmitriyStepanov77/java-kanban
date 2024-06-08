@@ -23,7 +23,7 @@ public class BaseHttpHandler {
         h.close();
     }
 
-    protected void sendNotGound(HttpExchange h) throws IOException {
+    protected void sendNotFound(HttpExchange h) throws IOException {
         h.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
         h.sendResponseHeaders(404, 0);
         h.close();
@@ -41,7 +41,7 @@ public class BaseHttpHandler {
         h.close();
     }
 
-    protected Gson getJson() {
+    protected static Gson getJson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting()
                 .serializeNulls()
